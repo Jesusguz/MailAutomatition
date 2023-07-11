@@ -1,0 +1,40 @@
+
+
+function formSubmitReply () {
+    //direccion de drive de excel
+ let libro=SpreadsheetApp.openById('1QC4_v9fT4Ik15bcC_KirU0KwX1YjUq1mHRHIICRpZK8');
+ //nombre del libro
+ let hoja=libro.getSheetByName('Respuestas de formulario 1');
+ let fila=hoja.getLastRow();
+ let d=hoja.getRange("A"+fila+":O"+fila).getValues();
+ let datos=d[0].filter(novacio);
+
+
+ Logger.log(datos);
+ //destinatarios
+var usuarioEmail = '';
+//imagen a enviar en correo
+var msg ="<p><img src='' alt='' width='700' height='200' /></p>"+
+"<p><h4>Por este medio informamos :</h4></p>" +
+"<b>Nueva incidencia encontrada:</b><br>"+
+"Fecha y hora:"+datos[0]+"<br>"+
+"Edificio: "+datos[6]+"<br>"+
+"Area: "+datos[7]+"<br>"+
+"Incidencia: "+datos[4]+"<br>"+
+"Tipo de incidencia: "+datos[5]+"<br>"
+;
+ MailApp.sendEmail ({
+ to: usuarioEmail,
+ subject: "Asunto",
+ htmlBody: msg
+ }
+);
+}
+function novacio(datos){
+ if(datos){
+   Logger.log(datos)
+   return true;
+ }else{
+   return false;
+ }
+}
